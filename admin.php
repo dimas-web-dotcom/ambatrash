@@ -83,8 +83,7 @@ include 'php/fetch_packages_data.php';
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
-                        // Check if $packagesData is an array and not null
+                    <?php
                         if (is_array($packagesData) && !empty($packagesData)) {
                             foreach ($packagesData as $package) {
                                 echo "<tr>";
@@ -94,13 +93,14 @@ include 'php/fetch_packages_data.php';
                                 echo "<td class='desc'>" . htmlspecialchars($package['packet_description']) . "</td>";
                                 echo "<td>
                                         <a href='php/delete_packet.php?ID_packet=" . htmlspecialchars($package['ID_packet']) . "' class='delete-btn'>DELETE</a>
-
-                                        <button class='edit-btn'>EDIT</button>
+                                        <button class='edit-btn' 
+                                                data-id='" . htmlspecialchars($package['ID_packet']) . "' 
+                                                data-name='" . htmlspecialchars($package['packet_name']) . "' 
+                                                data-price='" . htmlspecialchars($package['packet_price']) . "' 
+                                                data-description='" . htmlspecialchars($package['packet_description']) . "'>EDIT</button>
                                     </td>";
                                 echo "</tr>";
                             }
-                        } else {
-                            echo "<tr><td colspan='5'>No packages found</td></tr>";
                         }
                         ?>
                     </tbody>
@@ -114,17 +114,19 @@ include 'php/fetch_packages_data.php';
                     <span class="close">&times;</span>
                     <h2>ADD Package</h2>
                     <form id="add-package-form" action="" method="">
-                        <input type="hidden" id="package-id" name="id" required>
-                        <label for="package-name">Name:</label>
-                        <input type="text" id="package-name" name="name" required>
+                        <label for="ID-packet">ID</label>
+                        <input type="number" id="ID-packet" name="id" required>
+                        <br>
+                        <label for="packet-name">Name:</label>
+                        <input type="text" id="packet-name" name="packet_name" required>
                         <br>
 
-                        <label for="package-price">Price:</label>
-                        <input type="number" id="package-price" name="price" required>
+                        <label for="packet-price">Price:</label>
+                        <input type="number" id="packet-price" name="packet_price" required>
                         <br>
 
-                        <label for="package-description">Description:</label>
-                        <input type="text" id="package-description" name="description" required>
+                        <label for="packet-description">Description:</label>
+                        <input type="text" id="packet-description" name="packet_description" required>
                         <br>
 
                         <button type="submit">Save Changes</button>
@@ -138,19 +140,18 @@ include 'php/fetch_packages_data.php';
                     <span class="closeDua">&times;</span>
                     <h2>Edit Package</h2>
                     <form id="edit-package-form" action="php/update_packet.php" method="POST">
-                        <input type="hidden" id="package-id" name="id" required>
-                        <label for="package-name">Name:</label>
-                        <input type="text" id="package-name" name="name" required>
+                        <label for="ID_packet">ID</label>
+                        <input type="hidden" id="ID_packet" name="ID_packet" required>
                         <br>
-
-                        <label for="package-price">Price:</label>
-                        <input type="number" id="package-price" name="price" required>
+                        <label for="packet_name">Name:</label>
+                        <input type="text" id="packet_name" name="packet_name" required>
                         <br>
-
-                        <label for="package-description">Description:</label>
-                        <input type="text" id="package-description" name="description" required>
+                        <label for="packet_price">Price:</label>
+                        <input type="number" id="packet_price" name="packet_price" required>
                         <br>
-
+                        <label for="packet_description">Description:</label>
+                        <input type="text" id="packet_description" name="packet_description" required>
+                        <br>
                         <button type="submit">Save Changes</button>
                     </form>
                 </div>
