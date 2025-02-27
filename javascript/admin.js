@@ -1,3 +1,26 @@
+// Get the modal and button elements
+const addPackageBtn = document.getElementById('add-package-btn');
+const addPackageModal = document.getElementById('add-package-modal');
+const closeBtn = document.querySelector('.close');
+
+
+addPackageBtn.addEventListener('click', () => {
+    addPackageModal.style.display = 'block';
+});
+
+closeBtn.addEventListener('click', () => {
+    addPackageModal.style.display = 'none';
+});
+
+window.addEventListener('click', (event) => {
+    if (event.target === addPackageModal) {
+        addPackageModal.style.display = 'none';
+    }
+});
+
+
+// ini adalah pembatas antara add dan edit 
+
 // Get all edit buttons
 const editButtons = document.querySelectorAll('.edit-btn');
 

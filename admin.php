@@ -40,7 +40,7 @@ include 'php/fetch_packages_data.php';
             <div id="users" class="section">
                 <h3>Users</h3>
                 <div class="user-stats">
-                    <p>Total Users: <span id="total-users">3</span></p>
+                    <p>Total Users: <span id="total-users"></span></p>
                 </div>
                 <table id="user-table">
                     <thead>
@@ -113,20 +113,20 @@ include 'php/fetch_packages_data.php';
                 <div class="modal-content">
                     <span class="close">&times;</span>
                     <h2>ADD Package</h2>
-                    <form id="add-package-form" action="" method="">
+                    <form id="add-package-form" action="php/add_packet.php" method="POST">
                         <label for="ID-packet">ID</label>
                         <input type="number" id="ID-packet" name="id" required>
                         <br>
                         <label for="packet-name">Name:</label>
-                        <input type="text" id="packet-name" name="packet_name" required>
+                        <input type="text" id="packet-name" name="packet-name" required>
                         <br>
 
                         <label for="packet-price">Price:</label>
-                        <input type="number" id="packet-price" name="packet_price" required>
+                        <input type="number" id="packet-price" name="packet-price" required>
                         <br>
 
                         <label for="packet-description">Description:</label>
-                        <input type="text" id="packet-description" name="packet_description" required>
+                        <input type="text" id="packet-description" name="packet-description" required>
                         <br>
 
                         <button type="submit">Save Changes</button>
