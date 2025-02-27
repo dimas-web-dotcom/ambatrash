@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($user && password_verify($password, $user['password'])) { // Ganti $email dengan $password
         session_start();
-        $_SESSION['user_id'] = $user['ID_user'];
+        $_SESSION['ID_user'] = $user['ID_user'];
         $_SESSION['email'] = $user['email'];
         $_SESSION['role'] = $user['role'];
 

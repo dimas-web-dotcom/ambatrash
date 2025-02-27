@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['role']) || $_SESSION['role'] != 'user') {
+if (!isset($_SESSION['ID_user']) || $_SESSION['role'] != 'user') {
     header('Location: login.html');
     exit();
 }
@@ -28,26 +28,19 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != 'user') {
     <link rel="stylesheet" href="src/output.css">
 </head>
 <body>
-    <!--Navbar Start-->
-    <nav class="navbar">
+<nav class="navbar">
         <a href="#" class="navbar-logo">Amba<span>TRASH</span></a>
-
         <div class="navbar-nav">
             <a href="dashboard.php">Home</a>
             <a href="php/logout.php">Logout</a>
         </div>
-
         <div class="navbar-extra">
             <a href="#" id="hamburger-menu"><i data-feather="menu"></i></a>
         </div>
-
     </nav>
-    <!--Navbar End-->
 
-    <!-- payment  start -->
-     
+    <!-- Payment Section -->
     <div class="container">
-
         <?php 
             include 'php/database.php';
 
@@ -75,32 +68,25 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != 'user') {
         ?>
     </div>
 
-    <!-- payment  end -->
-
-     <!-- Footer Start -->
-     <footer>
+    <!-- Footer -->
+    <footer>
         <div class="socials flex justify-center">
             <a href="#"><i data-feather="instagram"></i></a>
             <a href="#"><i data-feather="twitter"></i></a>
             <a href="#"><i data-feather="facebook"></i></a>
         </div>
-
         <div class="links">
             <a href="dashboard.php">Home</a>
         </div>
-
         <div class="credit">
             <p>Created By <a href="">Kelompok Musketeers</a>. | &copy; 2025 </p>
         </div>
-     </footer>
-    <!-- Footer End -->
+    </footer>
 
-    <!-- Icon -->
+    <!-- Icon dan JavaScript -->
     <script>
         feather.replace();
     </script>
 
-    <!-- My Javascripst -->
-     <script src="addcart.js"></script>
 </body>
 </html>

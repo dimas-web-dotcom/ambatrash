@@ -1,0 +1,53 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+}
+
+.success-container {
+    text-align: center;
+}
+
+.checkmark {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #4CAF50;
+    position: relative;
+    animation: scale 0.5s ease-in-out;
+}
+
+.checkmark::after {
+    content: "";
+    position: absolute;
+    left: 35px;
+    top: 50px;
+    width: 30px;
+    height: 60px;
+    border: solid white;
+    border-width: 0 5px 5px 0;
+    transform: rotate(45deg) scale(1);
+    animation: draw 0.5s ease-in-out;
+}
+
+@keyframes scale {
+    0% { transform: scale(0); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+@keyframes draw {
+    0% { transform: rotate(45deg) scale(0); }
+    50% { transform: rotate(45deg) scale(1.2); }
+    100% { transform: rotate(45deg) scale(1); }
+}
+
+.success-message {
+    margin-top: 20px;
+    font-size: 24px;
+    color: #4CAF50;
+}
