@@ -11,6 +11,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
 include 'php/fetch_user_data.php'; // Include the data fetching script
 include 'php/delete_user.php';
 include 'php/fetch_packages_data.php';
+include 'php/database.php';
 ?>
 
 <!DOCTYPE html>
@@ -32,10 +33,12 @@ include 'php/fetch_packages_data.php';
         </div>
 
         <div class="main-content">
-            <div id="sales" class="section">
-                <h3>Sales</h3>
-                <canvas id="sales-chart"></canvas>
-            </div>
+                <div id="sales_chart" class="section">
+                    <h3>Grafik Penjualan Per Hari</h3>
+                    <div class="chart-container">
+                        <canvas id="salesChart"></canvas>
+                    </div>
+                </div>
              
             <div id="users" class="section">
                 <h3>Users</h3>
@@ -157,9 +160,42 @@ include 'php/fetch_packages_data.php';
                 </div>
             </div>
 
+            <!-- table payment -->
+            <div id="payments" class="section">
+                <h3>Payments</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID Buy</th>
+                            <th>ID User</th>
+                            <th>ID Paket</th>
+                            <th>Order Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $result = mysqli_query($koneksi, "SELECT * FROM list_buy");
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo "<tr>
+                                    <td>{$row['id_buy']}</td>
+                                    <td>{$row['ID_user']}</td>
+                                    <td>{$row['ID_packet']}</td>
+                                    <td>{$row['order_date']}</td>
+                                  </tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Grafik Penjualan -->
+
+
         </div>
     </div>
 
+
+    
     <script src="javascript/admin.js"></script>
 </body>
 </html>

@@ -1,9 +1,6 @@
 <?php
 include 'database.php';
 
-// Debugging: Cetak data yang dikirim dari formulir
-var_dump($_POST);
-
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_POST['ID_packet'];
@@ -21,7 +18,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo $sql; // Debugging: Cetak query SQL
 
     if ($koneksi->query($sql)) {
-        echo "Package updated successfully";
+        echo "<Script>";
+        echo "window.location.href = '../admin.php';"; 
+        echo "</script>";
     } else {
         echo "Error updating package: " . $koneksi->error;
     }

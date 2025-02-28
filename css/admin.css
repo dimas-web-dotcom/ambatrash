@@ -255,3 +255,18 @@ button:hover {
     text-decoration: none;
     cursor: pointer;
 }
+
+.chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 900px;
+    height: 300px;  /* Sesuaikan tinggi */
+    margin: auto;
+}
+
+@media (max-width: 600px) {
+    .chart-container {
+        max-width: 100%; /* Supaya fleksibel di layar kecil */
+    }
+}
