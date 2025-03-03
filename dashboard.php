@@ -135,7 +135,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != 'user') {
     <!-- Contact Section Start -->
     <section id="contact" class="contact">
         <h2><span>Contact</span> Us</h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, harum?</p>
+        <p>Buang Sampah Tanpa Resah, Lingkungan Bersih, Hati Pun Indah!</p>
         <div class="row">
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31894.554218237525!2d113.8950144!3d-2.2216704!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dfcb25094706e19%3A0xbb98948229782892!2sBundaran%20Besar%20Palangkaraya!5e0!3m2!1sid!2sid!4v1739781880691!5m2!1sid!2sid" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="map"></iframe>
 
@@ -149,8 +149,8 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != 'user') {
                     <input type="nama" placeholder="email">
                 </div>
                 <div class="input-group">
-                    <i data-feather="phone"></i>
-                    <input type="nama" placeholder="no hp">
+                    <i data-feather="message"></i>
+                    <input type="nama" placeholder="Pesan">
                 </div>
                 <button type="submit" class="btn">Kirim Pesan</button>
             </form>

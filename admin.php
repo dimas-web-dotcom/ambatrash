@@ -12,6 +12,7 @@ include 'php/fetch_user_data.php'; // Include the data fetching script
 include 'php/delete_user.php';
 include 'php/fetch_packages_data.php';
 include 'php/database.php';
+
 ?>
 
 <!DOCTYPE html>
@@ -40,39 +41,30 @@ include 'php/database.php';
                     </div>
                 </div>
              
-            <div id="users" class="section">
-                <h3>Users</h3>
-                <div class="user-stats">
-                    <p>Total Users: <span id="total-users"></span></p>
+                <div id="users" class="section">
+                    <h3>Users</h3>
+                    <!-- Input dan Tombol Search -->
+                    <div class="search-container">
+                        <input type="text" id="search-name" placeholder="Search by name...">
+                        <button id="search-btn">Search</button>
+                    </div>
+                    <div class="user-stats">
+                        <p>Total Users: <span id="total-users"></span></p>
+                    </div>
+                    <table id="user-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Email</th>
+                                <th>Password</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="user-table-body">
+                            <!-- Data Users akan dimuat di sini -->
+                        </tbody>
+                    </table>
                 </div>
-                <table id="user-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Email</th>
-                            <th>Password</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        // Check if $usersData is an array and not null
-                        if (is_array($usersData) && !empty($usersData)) {
-                            foreach ($usersData as $user) {
-                                echo "<tr>";
-                                echo "<td>" . htmlspecialchars($user['ID_user']) . "</td>";
-                                echo "<td>" . htmlspecialchars($user['email']) . "</td>";
-                                echo "<td>" . htmlspecialchars($user['password']) . "</td>";
-                                echo "<td><a href='php/delete_user.php?ID_user=" . htmlspecialchars($user['ID_user']) . "' class='delete-btn'>DELETE</a></td>";
-                                echo "</tr>";
-                            }
-                        } else {
-                            echo "<tr><td colspan='4'>No users found</td></tr>";
-                        }
-                        ?>
-                    </tbody>
-                </table>
-            </div>
             <div id="packages" class="section">
                 <h3>Packages</h3>
                 <table id="package-table">
@@ -197,5 +189,6 @@ include 'php/database.php';
 
     
     <script src="javascript/admin.js"></script>
+    <script src="javascript/ajax.js"></script>
 </body>
 </html>
