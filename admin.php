@@ -1,14 +1,10 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 session_start();
 if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
     header('Location: login.html');
     exit();
 };
 
-include 'php/fetch_user_data.php'; // Include the data fetching script
 include 'php/delete_user.php';
 include 'php/fetch_packages_data.php';
 include 'php/database.php';
@@ -43,11 +39,6 @@ include 'php/database.php';
              
                 <div id="users" class="section">
                     <h3>Users</h3>
-                    <!-- Input dan Tombol Search -->
-                    <div class="search-container">
-                        <input type="text" id="search-name" placeholder="Search by name...">
-                        <button id="search-btn">Search</button>
-                    </div>
                     <div class="user-stats">
                         <p>Total Users: <span id="total-users"></span></p>
                     </div>
@@ -64,7 +55,15 @@ include 'php/database.php';
                             <!-- Data Users akan dimuat di sini -->
                         </tbody>
                     </table>
+
+                    <!-- Pagination -->
+                    <div class="pagination">
+                        <button id="prev-page">Previous</button>
+                        <span id="page-info">Page 1</span>
+                        <button id="next-page">Next</button>
+                    </div>
                 </div>
+
             <div id="packages" class="section">
                 <h3>Packages</h3>
                 <table id="package-table">
@@ -190,5 +189,6 @@ include 'php/database.php';
     
     <script src="javascript/admin.js"></script>
     <script src="javascript/ajax.js"></script>
+
 </body>
 </html>

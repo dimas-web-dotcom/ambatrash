@@ -1,15 +1,20 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const searchBtn = document.getElementById('search-btn');
-    const searchInput = document.getElementById('search-name');
     const userTableBody = document.getElementById('user-table-body');
+    const prevPageBtn = document.getElementById('prev-page');
+    const nextPageBtn = document.getElementById('next-page');
+    const pageInfo = document.getElementById('page-info');
+    
+    let currentPage = 1;
+    let totalPages = 1;
 
-    function loadUsers(searchName = '') {
+    function loadUsers(page = 1) {
         const xhr = new XMLHttpRequest();
-        xhr.open('GET', `php/search_user.php?search_name=${searchName}`, true);
+        xhr.open('GET', `php/fetch_user_data.php?page=${page}`, true);
         xhr.onload = function () {
             if (xhr.status === 200) {
-                console.log('Response:', xhr.responseText);
-                const users = JSON.parse(xhr.responseText);
+                const response = JSON.parse(xhr.responseText);
+                const users = response.users;
+                totalPages = response.totalPages;
                 let html = '';
 
                 if (users.length > 0) {
@@ -30,6 +35,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
 
                 userTableBody.innerHTML = html;
+                pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+                prevPageBtn.disabled = currentPage === 1;
+                nextPageBtn.disabled = currentPage === totalPages;
             } else {
                 console.error('Error fetching data');
             }
@@ -37,15 +45,19 @@ document.addEventListener('DOMContentLoaded', function () {
         xhr.send();
     }
 
+    prevPageBtn.addEventListener('click', function () {
+        if (currentPage > 1) {
+            currentPage--;
+            loadUsers(currentPage);
+        }
+    });
+
+    nextPageBtn.addEventListener('click', function () {
+        if (currentPage < totalPages) {
+            currentPage++;
+            loadUsers(currentPage);
+        }
+    });
+
     loadUsers();
-
-    searchBtn.addEventListener('click', function () {
-        const searchName = searchInput.value.trim();
-        loadUsers(searchName);
-    });
-
-    searchInput.addEventListener('input', function () {
-        const searchName = searchInput.value.trim();
-        loadUsers(searchName);
-    });
 });
