@@ -186,9 +186,11 @@ include 'php/database.php';
     </div>
 
 
-    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="javascript/admin.js"></script>
     <script src="javascript/ajax.js"></script>
+
+
 
 </body>
 </html>
