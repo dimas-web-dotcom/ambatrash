@@ -22,19 +22,20 @@
        
             <form action="php/register.php" method="POST">
                 <h1>Registration</h1>
-    
                 <div class="input-box">
                     <input type="text" placeholder="Username" id="username" name="username" required>
+                    <span class="msg"></span> 
                 </div>
-
+                
                 <div class="input-box">
                     <input type="text" placeholder="Email" id="email" name="email">
-                </div>
-    
+                    <span class="msg"></span> 
+                </div>                
+                
                 <div class="input-box">
                     <input type="password" placeholder="Password" id="password" name="password" required>
                 </div>
-    
+                
     
                 <button type="submit" name="regis" class="btn btn-primary w-100">Daftar</button>
 
@@ -52,5 +53,8 @@
 
     </div>
     
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="javascript/regis.js"></script>
 </body>
 </html>
