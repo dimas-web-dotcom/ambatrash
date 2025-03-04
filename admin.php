@@ -39,9 +39,6 @@ include 'php/database.php';
              
                 <div id="users" class="section">
                     <h3>Users</h3>
-                    <div class="user-stats">
-                        <p>Total Users: <span id="total-users"></span></p>
-                    </div>
                     <table id="user-table">
                         <thead>
                             <tr>
