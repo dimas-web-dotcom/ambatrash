@@ -11,7 +11,7 @@ if (!isset($_SESSION['ID_user']) || $_SESSION['role'] != 'user') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Payment Page</title>
 
     <!-- Fonts -->
     <script src="https://kit.fontawesome.com/c70abe0f51.js" crossorigin="anonymous"></script>
@@ -23,12 +23,16 @@ if (!isset($_SESSION['ID_user']) || $_SESSION['role'] != 'user') {
     <script src="https://unpkg.com/feather-icons"></script>
 
     <!-- Style -->
-     
     <link rel="stylesheet" href="css/payment.css">
     <link rel="stylesheet" href="src/output.css">
+
+    <!-- Midtrans Snap.js -->
+    <script type="text/javascript"
+        src="https://app.sandbox.midtrans.com/snap/snap.js"
+        data-client-key="SB-Mid-client-U_QlWb9ToE6zJEG8"></script>
 </head>
 <body>
-<nav class="navbar">
+    <nav class="navbar">
         <a href="#" class="navbar-logo">Amba<span>TRASH</span></a>
         <div class="navbar-nav">
             <a href="dashboard.php">Home</a>
@@ -49,17 +53,12 @@ if (!isset($_SESSION['ID_user']) || $_SESSION['role'] != 'user') {
 
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
-                    echo '<div id="root" class="sm:max-w-48 md:max-w-96">';
+                    echo '<div class="packet-item">';
                     echo '<img src="image/Gambar5.jpg" alt="Gambar5">';
                     echo '<span class="text-center">' . htmlspecialchars($row['packet_name']) . '</span>';
                     echo '<p class="">' . htmlspecialchars($row['packet_description']) . '</p>';
-                    echo '<span class="text-center">' . htmlspecialchars($row['packet_price']) . '</span>';
-                    echo '<form action="php/order.php" method="POST">';
-                    echo '<input type="hidden" name="packet_id" value="' . htmlspecialchars($row['ID_packet']) . '">';
-                    echo '<input type="hidden" name="packet_name" value="' . htmlspecialchars($row['packet_name']) . '">';
-                    echo '<input type="hidden" name="packet_price" value="' . htmlspecialchars($row['packet_price']) . '">';
-                    echo '<button type="submit" class="btn">BUY</button>';
-                    echo '</form>';
+                    echo '<span class="text-center">Rp ' . number_format($row['packet_price'], 0, ',', '.') . '</span>';
+                    echo '<button onclick="openModal(\'' . $row['ID_packet'] . '\', \'' . htmlspecialchars($row['packet_name']) . '\', \'' . $row['packet_price'] . '\')" class="btn">BUY</button>';
                     echo '</div>';
                 }
             } else {
@@ -83,10 +82,37 @@ if (!isset($_SESSION['ID_user']) || $_SESSION['role'] != 'user') {
         </div>
     </footer>
 
-    <!-- Icon dan JavaScript -->
-    <script>
-        feather.replace();
-    </script>
+    <!-- Modal untuk Payment -->
+    <div id="payment-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Payment Details</h2>
+            <form id="payment-form" method="POST">
+                <input type="hidden" name="packet_id" id="modal-packet-id">
+                <input type="hidden" name="packet_name" id="modal-packet-name">
+                <input type="hidden" name="packet_price" id="modal-packet-price">
 
+                <label for="name">Nama:</label>
+                <input type="text" id="name" name="name" placeholder="Nama" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Email" required>
+
+                <label for="phone">Nomor HP:</label>
+                <input type="tel" id="phone" name="phone" placeholder="Phone" required>
+
+                <label for="address">Alamat:</label>
+                <textarea id="address" name="address" placeholder="Address" required></textarea>
+
+                <button type="submit" class="btn">Confirm Payment</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="javascript/payment.js"></script>
+    <script>
+        feather.replace(); // Inisialisasi Feather Icons
+    </script>
 </body>
 </html>
