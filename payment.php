@@ -33,15 +33,16 @@ if (!isset($_SESSION['ID_user']) || $_SESSION['role'] != 'user') {
 </head>
 <body>
     <nav class="navbar">
-        <a href="#" class="navbar-logo">Amba<span>TRASH</span></a>
-        <div class="navbar-nav">
-            <a href="dashboard.php">Home</a>
-            <a href="php/logout.php">Logout</a>
-        </div>
-        <div class="navbar-extra">
-            <a href="#" id="hamburger-menu"><i data-feather="menu"></i></a>
-        </div>
+            <a href="#" class="navbar-logo">Amba<span>TRASH</span></a>
+            <div class="navbar-nav">
+                <a href="#home">Home</a>
+                <a href="php/logout.php">Logout</a>
+            </div>
+            <div class="navbar-extra">
+                <a href="#" id="hamburger-menu"><i data-feather="menu"></i></a>
+            </div>
     </nav>
+
 
     <!-- Payment Section -->
     <div class="container">
@@ -54,11 +55,12 @@ if (!isset($_SESSION['ID_user']) || $_SESSION['role'] != 'user') {
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     echo '<div class="packet-item">';
-                    echo '<img src="image/Gambar5.jpg" alt="Gambar5">';
-                    echo '<span class="text-center">' . htmlspecialchars($row['packet_name']) . '</span>';
-                    echo '<p class="">' . htmlspecialchars($row['packet_description']) . '</p>';
-                    echo '<span class="text-center">Rp ' . number_format($row['packet_price'], 0, ',', '.') . '</span>';
-                    echo '<button onclick="openModal(\'' . $row['ID_packet'] . '\', \'' . htmlspecialchars($row['packet_name']) . '\', \'' . $row['packet_price'] . '\')" class="btn">BUY</button>';
+                    echo '  <img src="image/Gambar5.jpg" alt="Gambar5">';
+                    echo '  <span class="text-center">' . htmlspecialchars($row["packet_name"]) . '</span>';
+                    echo '  <p>' . htmlspecialchars($row["packet_description"]) . '</p>';
+                    echo '  <span class="text-center">Rp' . number_format($row["packet_price"], 0, ',', '.') . '</span>';
+                    // Gunakan tombol dengan type button dan panggil fungsi openModal()
+                    echo '  <button type="button" onclick="openModal(\'' . $row["ID_packet"] . '\', \'' . htmlspecialchars($row["packet_name"]) . '\', \'' . $row["packet_price"] . '\')" class="btn">BUY</button>';
                     echo '</div>';
                 }
             } else {
@@ -76,6 +78,7 @@ if (!isset($_SESSION['ID_user']) || $_SESSION['role'] != 'user') {
         </div>
         <div class="links">
             <a href="dashboard.php">Home</a>
+            <a href="php/logout.php">Logout</a>
         </div>
         <div class="credit">
             <p>Created By <a href="">Kelompok Musketeers</a>. | &copy; 2025 </p>
@@ -87,7 +90,7 @@ if (!isset($_SESSION['ID_user']) || $_SESSION['role'] != 'user') {
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Payment Details</h2>
-            <form id="payment-form" method="POST">
+            <form id="payment-form" action="php/order.php" method="POST">
                 <input type="hidden" name="packet_id" id="modal-packet-id">
                 <input type="hidden" name="packet_name" id="modal-packet-name">
                 <input type="hidden" name="packet_price" id="modal-packet-price">
@@ -109,10 +112,12 @@ if (!isset($_SESSION['ID_user']) || $_SESSION['role'] != 'user') {
         </div>
     </div>
 
+
     <!-- JavaScript -->
     <script src="javascript/payment.js"></script>
     <script>
         feather.replace(); // Inisialisasi Feather Icons
     </script>
+
 </body>
 </html>

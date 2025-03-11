@@ -1,31 +1,89 @@
 <?php
-// Pastikan user sudah login
 session_start();
 if (!isset($_SESSION['ID_user']) || $_SESSION['role'] != 'user') {
-    header('Location: login.html');
+    echo json_encode(['error' => 'Unauthorized']);
     exit();
 }
 
-include 'database.php'; // Include koneksi database
+header('Content-Type: application/json'); // Set response sebagai JSON
 
-// Ambil data dari formulir
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $ID_packet = $_POST['packet_id'];
-    $ID_user = $_SESSION['ID_user']; // Ambil ID_user dari session
+require_once dirname(__FILE__) . '/midtrans-php-master/Midtrans.php';
 
-    // Query untuk menyimpan data ke tabel list_buy
-    $sql = "INSERT INTO list_buy (ID_packet, ID_user) VALUES ('$ID_packet', '$ID_user')";
+// Set Merchant Server Key
+\Midtrans\Config::$serverKey = 'SB-Mid-server-oTS7zgO5wrXCd-F3cqozNTff'; // Ganti dengan Server Key Anda
+\Midtrans\Config::$isProduction = false; // Ubah ke true jika di production
+\Midtrans\Config::$isSanitized = true;
+\Midtrans\Config::$is3ds = true;
 
-    if ($koneksi->query($sql) === TRUE) {
-        // Tampilkan halaman sukses
-        include '../templates/succes.html';
-        exit();
-    } else {
-        echo "Error: " . $sql . "<br>" . $koneksi->error;
-    }
-} else {
-    echo "Invalid request method.";
+// Ambil data dari POST
+$packet_id = $_POST['packet_id'];
+$packet_name = $_POST['packet_name'];
+$packet_price = $_POST['packet_price'];
+$name = $_POST['name'];
+$email = $_POST['email'];
+$phone = $_POST['phone'];
+$address = $_POST['address'];
+
+// Validasi data
+if (empty($packet_id) || empty($packet_name) || empty($packet_price) || empty($name) || empty($email) || empty($phone) || empty($address)) {
+    echo json_encode(['error' => 'Data tidak lengkap']);
+    exit();
 }
 
+// Simpan data ke database lokal
+include 'database.php'; // Include koneksi database
+
+$ID_user = $_SESSION['ID_user']; // Ambil ID_user dari session
+
+// Query untuk menyimpan data ke tabel list_buy
+$sql = "INSERT INTO list_buy (ID_packet, ID_user, order_date) VALUES (?, ?, NOW())";
+$stmt = $koneksi->prepare($sql);
+$stmt->bind_param('ii', $packet_id, $ID_user);
+
+if ($stmt->execute()) {
+    // Jika berhasil disimpan ke database lokal, lanjutkan ke Midtrans
+    $name_parts = explode(' ', $name, 2);
+    $first_name = $name_parts[0];
+    $last_name = isset($name_parts[1]) ? $name_parts[1] : '';
+
+    $params = array(
+        'transaction_details' => array(
+            'order_id' => uniqid(), // Gunakan order_id yang unik
+            'gross_amount' => (int) $packet_price,
+        ),
+        'customer_details' => array(
+            'first_name' => $first_name,
+            'last_name' => $last_name,
+            'email' => $email,
+            'phone' => $phone,
+            'billing_address' => array(
+                'first_name' => $first_name,
+                'last_name' => $last_name,
+                'phone' => $phone,
+                'address' => $address,
+                'country_code' => 'IDN',
+            ),
+        ),
+        'item_details' => array(
+            array(
+                'id' => $packet_id,
+                'price' => (int) $packet_price,
+                'quantity' => 1,
+                'name' => $packet_name,
+            ),
+        ),
+    );
+
+    try {
+        $snapToken = \Midtrans\Snap::getSnapToken($params);
+        echo json_encode(['snapToken' => $snapToken]);
+    } catch (Exception $e) {
+        echo json_encode(['error' => $e->getMessage()]);
+    }
+} else {
+    echo json_encode(['error' => 'Gagal menyimpan data ke database lokal']);
+}
+
+$stmt->close();
 $koneksi->close();
 ?>

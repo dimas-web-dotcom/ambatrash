@@ -1,15 +1,13 @@
-// Ambil elemen modal
+// Ambil elemen modal dan tombol close
 const modal = document.getElementById("payment-modal");
 const closeBtn = document.querySelector(".close");
 
-// Fungsi untuk membuka modal
+// Fungsi untuk membuka modal dan mengisi data produk
 function openModal(packetId, packetName, packetPrice) {
-    // Isi data paket ke dalam form modal
     document.getElementById("modal-packet-id").value = packetId;
     document.getElementById("modal-packet-name").value = packetName;
     document.getElementById("modal-packet-price").value = packetPrice;
-
-    // Tampilkan modal
+    
     modal.style.display = "block";
 }
 
@@ -18,10 +16,10 @@ function closeModal() {
     modal.style.display = "none";
 }
 
-// Event listener untuk tombol close
+// Event listener untuk tombol close di modal
 closeBtn.addEventListener("click", closeModal);
 
-// Tutup modal jika mengklik di luar modal
+// Tutup modal jika klik di luar konten modal
 window.addEventListener("click", (event) => {
     if (event.target === modal) {
         closeModal();
@@ -37,7 +35,7 @@ document.getElementById("payment-form").addEventListener("submit", async (event)
 
     try {
         // Kirim data ke `placeOrder.php` untuk mendapatkan Snap Token
-        const response = await fetch("php/placeOrder.php", {
+        const response = await fetch("php/order.php", {
             method: "POST",
             body: formData,
         });
@@ -69,3 +67,5 @@ document.getElementById("payment-form").addEventListener("submit", async (event)
         alert("Terjadi kesalahan saat memproses pembayaran.");
     }
 });
+
+
