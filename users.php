@@ -20,8 +20,11 @@ include 'php/delete_user.php';
 <body>
     <div class="dashboard">
         <div class="sidebar">
+            <div class="mobile-menu-toggle">
+                <div class="hamburger"></div>
+            </div>
             <h2>Admin Dashboard</h2>
-            <ul>
+            <ul class="nav-menu">
                 <li><a href="admin.php">Dashboard</a></li>
                 <li><a href="users.php">Users</a></li>
                 <li><a href="packages.php">Packages</a></li>
@@ -57,6 +60,7 @@ include 'php/delete_user.php';
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="javascript/users.js"></script>
     <script src="javascript/admin.js"></script>
     <script src="javascript/ajax.js"></script>
 </body>

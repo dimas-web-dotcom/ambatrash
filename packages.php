@@ -20,8 +20,11 @@ include 'php/fetch_packages_data.php';
 <body>
     <div class="dashboard">
         <div class="sidebar">
+            <div class="mobile-menu-toggle">
+                <div class="hamburger"></div>
+            </div>
             <h2>Admin Dashboard</h2>
-            <ul>
+            <ul class="nav-menu">
                 <li><a href="admin.php">Dashboard</a></li>
                 <li><a href="users.php">Users</a></li>
                 <li><a href="packages.php">Packages</a></li>
@@ -120,7 +123,9 @@ include 'php/fetch_packages_data.php';
         </div>
     </div>
 
+    <!-- <script src="javascript/packages.js"></script> -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="javascript/packages.js"></script>
     <script src="javascript/admin.js"></script>
 </body>
 </html>

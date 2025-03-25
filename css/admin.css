@@ -1,283 +1,1062 @@
+:root {
+  --primary-color: #11ad72;
+  --secondary-color: #3f37c9;
+  --accent-color: #4895ef;
+  --light-color: #f8f9fa;
+  --dark-color: #212529;
+  --success-color: #4cc9f0;
+  --warning-color: #f72585;
+  --sidebar-width: 250px;
+  --transition-speed: 0.3s;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
+  background-color: #f5f7fa;
+  color: var(--dark-color);
+  line-height: 1.6;
 }
 
 .dashboard {
-    width: 100%;
-    display: flex;
+  display: flex;
+  min-height: 100vh;
 }
 
+/* ====================== */
+/* SIDEBAR & MOBILE MENU */
+/* ====================== */
+
 .sidebar {
-    width: 200px;
-    background-color: #11ad72;
-    color: white;
-    padding: 20px;
+  width: var(--sidebar-width);
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  padding: 20px 0;
+  height: 100vh;
+  position: fixed;
+  transition: all var(--transition-speed) ease;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 100;
 }
 
 .sidebar h2 {
-    margin: 0;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 1.5rem;
+  padding: 0 15px;
+  color: white;
 }
 
 .sidebar ul {
-    list-style: none;
-    padding: 0;
+  list-style: none;
 }
 
 .sidebar ul li {
-    margin: 10px 0;
+  margin: 5px 0;
 }
 
 .sidebar ul li a {
-    color: white;
-    text-decoration: none;
-}
-
-.main-content {
-    flex: 1;
-    padding: 20px;
-}
-
-.section {
-    margin-bottom: 20px;
-}
-
-.user-stats {
-    margin-bottom: 10px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-
-table, th, td {
-    border: 1px solid #ddd;
-}
-
-.desc {
-    word-wrap: break-word; 
-    max-width: 200px;
-    white-space: normal;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    vertical-align: top; 
-}
-
-th, td {
-    padding: 10px;
-    text-align: left;
-    
-}
-
-th {
-    background-color: #f2f2f2;
-}
-
-.delete-btn{
-    padding: 10px 20px;
-    background-color:#c73850;
-    color: white;
-    border: none;
-    cursor: pointer;
-    text-decoration: none;
-}
-
-.edit-btn{
-    padding: 10px 20px;
-    background-color:#11ad72;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-/* Modal (Popup) */
-/* Modal (Popup) */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0,0.4);
-    padding-top: 60px;
-}
-
-.modal-content {
-    background-color: #fefefe;
-    margin: 5% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 600px;
-}
-
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-/* Form Styling */
-form {
-    display: flex;
-    flex-direction: column;
-}
-
-label {
-    margin-top: 10px;
-}
-
-input {
-    margin-top: 5px;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-
-button {
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #45a049;
-}
-
-/* Responsive Table */
-@media (max-width: 768px) {
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 20px;
-        display: block;
-        overflow-x: auto;
-        white-space: nowrap;
-    }
-
-    th, td {
-        padding: 10px;
-        text-align: left;
-        border: 1px solid #ddd;
-    }
-
-    th {
-        background-color: #f2f2f2;
-    }
-
-    .desc {
-        word-wrap: break-word;
-        max-width: 200px;
-        white-space: normal;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        text-align: center;
-    }
-
-    .delete-btn, .edit-btn {
-        padding: 10px 20px;
-        margin: 5px;
-        background-color: #c73850;
-        color: white;
-        border: none;
-        cursor: pointer;
-    }
-
-    .edit-btn {
-        background-color: #11ad72;
-    }
-
-    button:hover {
-        background-color: #0056b3;
-    }
-}
-
-
-/* modal edit */
-
-/* Modal styles */
-.edit {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-.edit-content {
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
-}
-
-.closeDua {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.closeDua:hover,
-.closeDua:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.chart-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-width: 900px;
-    height: 300px;  /* Sesuaikan tinggi */
-    margin: auto;
-}
-
-@media (max-width: 600px) {
-    .chart-container {
-        max-width: 100%; /* Supaya fleksibel di layar kecil */
-    }
-}
-
-/* Navigasi aktif */
-.sidebar ul li a.active {
-    background-color: #45a049;
-    color: white;
+  display: block;
+  color: white;
+  text-decoration: none;
+  padding: 12px 20px;
+  border-radius: 4px;
+  margin: 0 10px;
+  transition: all 0.3s ease;
+  font-weight: 500;
 }
 
 .sidebar ul li a:hover {
-    background-color: #45a049;
-    color: white;
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateX(5px);
+}
+
+.sidebar ul li a.active {
+  background-color: rgba(255, 255, 255, 0.2);
+  font-weight: 600;
+}
+
+/* Mobile Menu Toggle */
+.mobile-menu-toggle {
+  display: none;
+  cursor: pointer;
+  padding: 15px;
+  position: fixed;
+  right: 15px;
+  top: 10px;
+  background: var(--primary-color);
+  border-radius: 5px;
+  z-index: 1000;
+}
+
+.hamburger {
+  width: 25px;
+  height: 3px;
+  background: white;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.hamburger:before,
+.hamburger:after {
+  content: '';
+  position: absolute;
+  width: 25px;
+  height: 3px;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.hamburger:before {
+  top: -8px;
+}
+
+.hamburger:after {
+  top: 8px;
+}
+
+/* Active states */
+.sidebar.active .hamburger {
+  background: transparent;
+}
+
+.sidebar.active .hamburger:before {
+  transform: rotate(45deg);
+  top: 0;
+}
+
+.sidebar.active .hamburger:after {
+  transform: rotate(-45deg);
+  top: 0;
+}
+
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 99;
+}
+
+body.sidebar-open {
+  overflow: hidden;
+}
+
+body.sidebar-open .sidebar-overlay {
+  display: block;
+}
+
+/* =============== */
+/* MAIN CONTENT */
+/* =============== */
+
+.main-content {
+  flex: 1;
+  margin-left: var(--sidebar-width);
+  padding: 30px;
+  transition: all var(--transition-speed) ease;
+}
+
+.section {
+  background: white;
+  border-radius: 10px;
+  padding: 25px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.section:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.section h3 {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+/* =============== */
+/* TABLES */
+/* =============== */
+
+.table-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 0.9em;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+}
+
+.table-container thead tr {
+  background-color: var(--primary-color);
+  color: white;
+  text-align: left;
+}
+
+.table-container th,
+.table-container td {
+  padding: 12px 15px;
+}
+
+.table-container tbody tr {
+  border-bottom: 1px solid #dddddd;
+  transition: all 0.2s ease;
+}
+
+.table-container tbody tr:nth-of-type(even) {
+  background-color: #f8f9fa;
+}
+
+.table-container tbody tr:last-of-type {
+  border-bottom: 2px solid var(--primary-color);
+}
+
+.table-container tbody tr:hover {
+  background-color: rgba(67, 97, 238, 0.05);
+}
+
+/* Special columns */
+.desc {
+  max-width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.password-column {
+  font-family: monospace;
+  color: #666;
+}
+
+.date-column {
+  font-family: monospace;
+  color: #555;
+}
+
+/* =============== */
+/* BUTTONS */
+/* =============== */
+
+.btn {
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-danger {
+  background-color: var(--warning-color);
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #d11a6a;
+  transform: translateY(-1px);
+}
+
+.btn-edit {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.btn-edit:hover {
+  background-color: #3a7bd5;
+  transform: translateY(-1px);
+}
+
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 0.8em;
+}
+
+/* =============== */
+/* PAGINATION */
+/* =============== */
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.pagination button {
+  min-width: 100px;
+}
+
+.pagination button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.pagination span {
+  font-weight: 600;
+  color: var(--dark-color);
+  min-width: 100px;
+  text-align: center;
+}
+
+/* =============== */
+/* MODALS */
+/* =============== */
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.3s;
+}
+
+.modal-content {
+  background-color: white;
+  margin: 2% auto;
+  padding: 20px;
+  max-height: 90vh;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 500px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow-y: auto;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.close:hover {
+  color: var(--warning-color);
+}
+
+/* =============== */
+/* FORMS */
+/* =============== */
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  color: var(--dark-color);
+  margin-bottom: 5px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  transition: border 0.3s;
+}
+
+.form-control:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
+}
+
+/* =============== */
+/* UTILITIES */
+/* =============== */
+
+.chart-container {
+  position: relative;
+  height: 400px;
+  width: 100%;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.loading-state {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+  font-style: italic;
+}
+
+/* =============== */
+/* ANIMATIONS */
+/* =============== */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* =============== */
+/* RESPONSIVE DESIGN */
+/* =============== */
+
+@media (max-width: 992px) {
+  .sidebar {
+    left: -250px;
+  }
+  
+  .sidebar.active {
+    left: 0;
+  }
+  
+  .mobile-menu-toggle {
+    display: block;
+  }
+  
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding: 20px;
+  }
+  
+  .section {
+    padding: 15px;
+  }
+  
+  .table-container {
+    overflow-x: auto;
+  }
+  
+  .table-container table {
+    display: block;
+    width: 100%;
+  }
+  
+  .pagination {
+    flex-wrap: wrap;
+  }
+  
+  .modal-content {
+    width: 90%;
+    margin: 10% auto;
+  }
+}
+
+@media (max-width: 576px) {
+  .main-content {
+    padding: 15px;
+  }
+  
+  .table-container th,
+  .table-container td {
+    padding: 8px 10px;
+    font-size: 0.85em;
+  }
+  
+  .btn-sm {
+    padding: 4px 8px;
+    font-size: 0.7em;
+  }
+  
+  .pagination button {
+    padding: 6px 12px;
+    min-width: 80px;
+  }
+  
+  .mobile-menu-toggle {
+    right: 10px;
+    padding: 12px;
+  }
+  
+  .hamburger,
+  .hamburger:before,
+  .hamburger:after {
+    width: 20px;
+  }
+}
+
+/* =============== */
+/* SCROLLBAR */
+/* =============== */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-color);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color);
+}
+
+
+/* users.css - Specific styles for Users Management Page */
+
+/* Add these styles to your existing admin.css file */
+
+/* User Management Section */
+#users.section {
+  padding: 25px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+  animation: fadeIn 0.5s ease-out;
+}
+
+#users.section h3 {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+/* User Table Styles */
+#user-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 0.9em;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+}
+
+#user-table thead tr {
+  background-color: var(--primary-color);
+  color: white;
+  text-align: left;
+}
+
+#user-table th,
+#user-table td {
+  padding: 12px 15px;
+}
+
+#user-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+  transition: all 0.2s ease;
+}
+
+#user-table tbody tr:nth-of-type(even) {
+  background-color: #f8f9fa;
+}
+
+#user-table tbody tr:last-of-type {
+  border-bottom: 2px solid var(--primary-color);
+}
+
+#user-table tbody tr:hover {
+  background-color: rgba(67, 97, 238, 0.05);
+  transform: translateX(5px);
+}
+
+/* Password Column */
+#user-table td:nth-child(3) {
+  font-family: monospace;
+  color: #666;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.delete-btn {
+  background-color: var(--warning-color);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8em;
+  transition: all 0.2s ease;
+}
+
+.delete-btn:hover {
+  background-color: #d11a6a;
+  transform: translateY(-1px);
+}
+
+.edit-btn {
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8em;
+  transition: all 0.2s ease;
+}
+
+.edit-btn:hover {
+  background-color: #3a7bd5;
+  transform: translateY(-1px);
+}
+
+/* Pagination Styles */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.pagination button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: var(--secondary-color);
+  transform: translateY(-1px);
+}
+
+.pagination button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.pagination span {
+  font-weight: 600;
+  color: var(--dark-color);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  #user-table {
+    display: block;
+    overflow-x: auto;
+  }
+  
+  #user-table th,
+  #user-table td {
+    padding: 8px 10px;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+    gap: 5px;
+  }
+}
+
+@media (max-width: 480px) {
+  #users.section {
+    padding: 15px;
+  }
+  
+  .pagination {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .pagination button {
+    width: 100%;
+  }
+}
+
+/* packages css */
+
+/* Table Styles */
+#package-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 0.9em;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+}
+
+#package-table thead tr {
+  background-color: var(--primary-color);
+  color: white;
+  text-align: left;
+}
+
+#package-table th,
+#package-table td {
+  padding: 12px 15px;
+}
+
+#package-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+  transition: all 0.2s ease;
+}
+
+#package-table tbody tr:nth-of-type(even) {
+  background-color: #f8f9fa;
+}
+
+#package-table tbody tr:last-of-type {
+  border-bottom: 2px solid var(--primary-color);
+}
+
+#package-table tbody tr:hover {
+  background-color: rgba(67, 97, 238, 0.05);
+  transform: translateX(5px);
+}
+
+/* Description Column */
+#package-table .desc {
+  max-width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Button Styles */
+#add-package-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+#add-package-btn:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.delete-btn, .edit-btn {
+  padding: 6px 12px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.8em;
+  margin-right: 5px;
+  transition: all 0.2s ease;
+}
+
+.delete-btn {
+  background-color: var(--warning-color);
+  color: white;
+}
+
+.edit-btn {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #d11a6a;
+  transform: translateY(-1px);
+}
+
+.edit-btn:hover {
+  background-color: #3a7bd5;
+  transform: translateY(-1px);
+}
+
+/* Modal Styles */
+.modal, .edit {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.3s;
+}
+
+.modal-content, .edit-content {
+  background-color: white;
+  margin: 2% auto;
+  padding: 20px;
+  border-radius: 8px;
+  max-height: 90vh;
+  width: 80%;
+  max-width: 500px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow-y: auto;
+}
+
+.close, .closeDua {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.close:hover, .closeDua:hover {
+  color: var(--warning-color);
+}
+
+/* Form Styles */
+#add-package-form, #edit-package-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#add-package-form label, #edit-package-form label {
+  font-weight: 500;
+  color: var(--dark-color);
+}
+
+#add-package-form input, #edit-package-form input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 100%;
+  transition: border 0.3s;
+}
+
+#add-package-form input:focus, #edit-package-form input:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
+}
+
+#add-package-form button[type="submit"], 
+#edit-package-form button[type="submit"] {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: all 0.3s;
+  margin-top: 10px;
+}
+
+#add-package-form button[type="submit"]:hover, 
+#edit-package-form button[type="submit"]:hover {
+  background-color: var(--secondary-color);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  #package-table {
+    display: block;
+    overflow-x: auto;
+  }
+  
+  .modal-content, .edit-content {
+    width: 90%;
+    margin: 10% auto;
+  }
+}
+
+@media (max-width: 480px) {
+  #package-table th, 
+  #package-table td {
+    padding: 8px 10px;
+    font-size: 0.8em;
+  }
+  
+  .delete-btn, .edit-btn {
+    padding: 4px 8px;
+    font-size: 0.7em;
+  }
+}
+
+/* Add to your existing admin.css file */
+
+/* Payments Section */
+#payments.section {
+  padding: 25px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+  animation: fadeIn 0.5s ease-out;
+}
+
+#payments.section h3 {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+/* Payment Table Styles */
+#payment-table-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 0.9em;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+}
+
+#payment-table-container thead tr {
+  background-color: var(--primary-color);
+  color: white;
+  text-align: left;
+}
+
+#payment-table-container th,
+#payment-table-container td {
+  padding: 12px 15px;
+}
+
+#payment-table-container tbody tr {
+  border-bottom: 1px solid #dddddd;
+  transition: all 0.2s ease;
+}
+
+#payment-table-container tbody tr:nth-of-type(even) {
+  background-color: #f8f9fa;
+}
+
+#payment-table-container tbody tr:last-of-type {
+  border-bottom: 2px solid var(--primary-color);
+}
+
+#payment-table-container tbody tr:hover {
+  background-color: rgba(67, 97, 238, 0.05);
+}
+
+/* Date Column Styling */
+#payment-table-container td:nth-child(4) {
+  font-family: monospace;
+  color: #555;
+}
+
+/* Pagination Styles */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.pagination button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 100px;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.pagination button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.pagination span {
+  font-weight: 600;
+  color: var(--dark-color);
+  min-width: 100px;
+  text-align: center;
+}
+
+/* Loading State */
+#payment-data tr td[colspan="4"] {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+  font-style: italic;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  #payment-table-container {
+    overflow-x: auto;
+  }
+  
+  #payment-table-container table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+  }
+  
+  .pagination {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 480px) {
+  #payments.section {
+    padding: 15px;
+  }
+  
+  #payment-table-container th,
+  #payment-table-container td {
+    padding: 8px 10px;
+    font-size: 0.85em;
+  }
+  
+  .pagination {
+    gap: 8px;
+  }
+  
+  .pagination button {
+    padding: 6px 12px;
+    min-width: 80px;
+  }
 }

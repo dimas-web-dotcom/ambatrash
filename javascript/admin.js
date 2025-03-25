@@ -67,41 +67,6 @@ window.addEventListener('click', (event) => {
     }
 });
 
-
-// payment table grafik
- fetch('php/get_sales_data.php')
- .then(response => response.json())
- .then(data => {
-     const labels = data.map(item => item.date); // Label perhari
-     const salesData = data.map(item => item.total_sales); // Data penjualan
-
-     const ctx = document.getElementById('salesChart').getContext('2d');
-     new Chart(ctx, {
-         type: 'line', // Bisa juga 'bar' untuk grafik batang
-         data: {
-             labels: labels,
-             datasets: [{
-                 label: 'Total Penjualan',
-                 data: salesData,
-                 backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                 borderColor: 'rgba(54, 162, 235, 1)',
-                 borderWidth: 2,
-                 fill: true
-             }]
-         },
-         options: {
-             responsive: true,
-             maintainAspectRatio: false,
-             scales: {
-                 y: {
-                     beginAtZero: true
-                 }
-             }
-         }
-     });
- })
- .catch(error => console.error('Error fetching sales data:', error));
-
  // Set menu aktif berdasarkan halaman saat ini
 $(document).ready(function() {
     const currentPage = window.location.pathname.split('/').pop();
