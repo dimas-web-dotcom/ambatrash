@@ -270,3 +270,14 @@ button:hover {
         max-width: 100%; /* Supaya fleksibel di layar kecil */
     }
 }
+
+/* Navigasi aktif */
+.sidebar ul li a.active {
+    background-color: #45a049;
+    color: white;
+}
+
+.sidebar ul li a:hover {
+    background-color: #45a049;
+    color: white;
+}

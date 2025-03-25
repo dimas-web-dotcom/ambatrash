@@ -101,3 +101,17 @@ window.addEventListener('click', (event) => {
      });
  })
  .catch(error => console.error('Error fetching sales data:', error));
+
+ // Set menu aktif berdasarkan halaman saat ini
+$(document).ready(function() {
+    const currentPage = window.location.pathname.split('/').pop();
+    
+    $('.sidebar ul li a').each(function() {
+        const linkPage = $(this).attr('href');
+        if (currentPage === linkPage) {
+            $(this).addClass('active');
+        }
+    });
+    
+    // Kode lainnya...
+});
