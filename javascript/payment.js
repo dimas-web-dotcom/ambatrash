@@ -1,108 +1,117 @@
-// Fungsi untuk mendapatkan lokasi dengan penanganan error yang lebih baik
 function getLocation() {
-    // Beri tahu pengguna bahwa kita membutuhkan izin lokasi
-    document.getElementById('address').placeholder = "Meminta izin akses lokasi...";
+    document.getElementById('address').placeholder = "Meminta izin lokasi...";
     
     if (navigator.geolocation) {
-        const options = {
-            enableHighAccuracy: true,
-            timeout: 10000, // 10 detik timeout
-            maximumAge: 0
-        };
-        
         navigator.geolocation.getCurrentPosition(
-            showPosition, 
-            showError, 
-            options
+            position => {
+                const { latitude, longitude } = position.coords;
+                reverseGeocode(latitude, longitude);
+                
+                // Opsional: Tampilkan peta (gunakan Leaflet)
+                showMap(latitude, longitude);
+            },
+            error => {
+                handleLocationError(error);
+            },
+            { enableHighAccuracy: true, timeout: 10000 }
         );
     } else {
-        showManualAddressInput("Browser tidak mendukung geolocation");
+        document.getElementById('address').placeholder = "Browser tidak mendukung geolokasi";
     }
 }
 
-function showPosition(position) {
-    document.getElementById('address').placeholder = "Mendapatkan alamat...";
+// Fungsi reverse geocoding dengan Nominatim
+function reverseGeocode(lat, lng) {
+    document.getElementById('location-status').textContent = "Mendapatkan alamat...";
     
-    const geocoder = new google.maps.Geocoder();
-    const latlng = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-    };
-
-    geocoder.geocode({ location: latlng }, (results, status) => {
-        if (status === "OK" && results[0]) {
-            document.getElementById('address').value = results[0].formatted_address;
-        } else {
-            showManualAddressInput("Gagal mendapatkan alamat otomatis. Silakan masukkan manual.");
-        }
-    });
+    fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.display_name) {
+                document.getElementById('address').value = data.display_name;
+                document.getElementById('location-status').textContent = "Lokasi ditemukan!";
+            } else {
+                throw new Error("Alamat tidak ditemukan");
+            }
+        })
+        .catch(error => {
+            document.getElementById('address').placeholder = "Gagal mendapatkan alamat: " + error.message;
+            document.getElementById('location-status').textContent = "Error";
+        });
 }
 
-function showError(error) {
-    let errorMessage = "Error: ";
+// Opsional: Tampilkan peta sederhana
+function showMap(lat, lng) {
+    const mapContainer = document.createElement('div');
+    mapContainer.id = 'map-preview';
+    mapContainer.style.height = '200px';
+    mapContainer.style.margin = '10px 0';
+    
+    const addressContainer = document.getElementById('address').parentNode;
+    addressContainer.insertBefore(mapContainer, document.getElementById('address'));
+    
+    const map = L.map('map-preview').setView([lat, lng], 15);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+    
+    L.marker([lat, lng]).addTo(map)
+        .bindPopup("Lokasi Anda")
+        .openPopup();
+}
+
+// Penanganan error
+function handleLocationError(error) {
+    let message = "Error: ";
     switch(error.code) {
         case error.PERMISSION_DENIED:
-            errorMessage = "Izin lokasi ditolak. Silakan masukkan alamat manual.";
+            message += "Izin lokasi ditolak";
             break;
         case error.POSITION_UNAVAILABLE:
-            errorMessage = "Informasi lokasi tidak tersedia.";
+            message += "Informasi lokasi tidak tersedia";
             break;
         case error.TIMEOUT:
-            errorMessage = "Permintaan lokasi timeout. Silakan coba lagi.";
+            message += "Permintaan timeout";
             break;
-        case error.UNKNOWN_ERROR:
-            errorMessage = "Terjadi kesalahan tidak diketahui.";
-            break;
+        default:
+            message += "Error tidak diketahui";
     }
-    showManualAddressInput(errorMessage);
+    document.getElementById('address').placeholder = message + ". Silakan masukkan manual.";
+    document.getElementById('location-status').textContent = "Error";
 }
 
-function showManualAddressInput(message) {
-    document.getElementById('address').placeholder = message + " Silakan ketik alamat manual.";
-    document.getElementById('address').focus();
-}
-
-// Fungsi openModal yang diperbarui
+// Fungsi openModal
 function openModal(packetId, packetName, packetPrice) {
-    // Isi data paket
+    // Isi data user
     document.getElementById('modal-packet-id').value = packetId;
     document.getElementById('modal-packet-name').value = packetName;
     document.getElementById('modal-packet-price').value = packetPrice;
-    
-    // Isi data user dari session
     document.getElementById('name').value = userData.name;
     document.getElementById('email').value = userData.email;
     document.getElementById('phone').value = userData.phone || '';
     
-    // Kosongkan alamat sementara
+    // Reset alamat
     document.getElementById('address').value = '';
-    document.getElementById('address').placeholder = "Klik tombol 'Deteksi Lokasi' atau ketik manual";
+    document.getElementById('address').placeholder = "Klik tombol deteksi lokasi";
+    
+    // Hapus peta sebelumnya jika ada
+    const oldMap = document.getElementById('map-preview');
+    if (oldMap) oldMap.remove();
     
     // Tampilkan modal
     document.getElementById('payment-modal').style.display = 'block';
-    
-    // Jangan otomatis meminta lokasi, biarkan user yang memulai
 }
 
-// Tutup modal ketika klik tombol close
-document.querySelector('.close').addEventListener('click', function() {
+// Event listeners
+document.querySelector('.close').addEventListener('click', () => {
     document.getElementById('payment-modal').style.display = 'none';
 });
 
-// Tutup modal ketika klik di luar modal
-window.addEventListener('click', function(event) {
-    const modal = document.getElementById('payment-modal');
-    if (event.target === modal) {
-        modal.style.display = 'none';
+window.addEventListener('click', (event) => {
+    if (event.target === document.getElementById('payment-modal')) {
+        document.getElementById('payment-modal').style.display = 'none';
     }
 });
-
-// Tambahkan event listener untuk tombol deteksi lokasi
-document.querySelector('button[onclick="getLocation()"]').addEventListener('click', function(e) {
-    e.preventDefault();
-    getLocation();
-});
-
 
 
 // Event listener untuk tombol "Confirm Payment"

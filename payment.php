@@ -20,7 +20,8 @@ $user_data = $user_result->fetch_assoc();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment Page</title>
     <!-- Tambahkan ini di bagian head -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0R3v6eP_1ps4vHx3qQ5IsxeFHgj0QwJM&libraries=places"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <!-- Fonts -->
     <script src="https://kit.fontawesome.com/c70abe0f51.js" crossorigin="anonymous"></script>
@@ -44,11 +45,8 @@ $user_data = $user_result->fetch_assoc();
     <nav class="navbar">
             <a href="#" class="navbar-logo">Amba<span>TRASH</span></a>
             <div class="navbar-nav">
-                <a href="#home">Home</a>
+                <a href="dashboard.php">Home</a>
                 <a href="php/logout.php">Logout</a>
-            </div>
-            <div class="navbar-extra">
-                <a href="#" id="hamburger-menu"><i data-feather="menu"></i></a>
             </div>
     </nav>
 

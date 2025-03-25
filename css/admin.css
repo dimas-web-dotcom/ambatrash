@@ -759,7 +759,7 @@ body.sidebar-open .sidebar-overlay {
   background-color: var(--primary-color);
   color: white;
   border: none;
-  padding: 10px 10px;
+  padding: 10px 0px;
   border-radius: 4px;
   cursor: pointer;
   font-size: 0.9em;
