@@ -1,53 +1,37 @@
 $(document).ready(function () {
-    // Cek username saat user mengetik
-    $("#username").on("input", function () {
-        let username = $(this).val().trim();
+    // Cek kekuatan password saat user mengetik
+    $("#password").on("input", function () {
+        let password = $(this).val().trim();
         $(this).next(".msg").remove(); // Hapus pesan lama setiap ketikan
-
-        if (username.length > 3) {
-            checkAvailability("username", username, "#username");
+        
+        // Validasi kekuatan password
+        if (password.length === 0) {
+            return; // Tidak tampilkan pesan jika kosong
+        }
+        
+        let hasUpperCase = /[A-Z]/.test(password);
+        let hasLowerCase = /[a-z]/.test(password);
+        let isStrong = password.length >= 8 && hasUpperCase && hasLowerCase;
+        
+        $(this).next(".msg").remove(); // Hapus pesan lama
+        
+        if (isStrong) {
+            $(this).after(
+                `<span class='msg' style='color:green; font-weight:bold;'>
+                    ✅ Password kuat!
+                </span>`
+            );
+        } else {
+            let message = "Password kurang kuat. Harus mengandung: ";
+            if (password.length < 8) message += "<br> Minimal 8 karakter ";
+            if (!hasUpperCase) message += "<br> Minimal 1 huruf besar ";
+            if (!hasLowerCase) message += "<br> Minimal 1 huruf kecil ";
+            
+            $(this).after(
+                `<span class='msg' style='color:red; font-weight:bold; font-size: 10px;'>
+                    ❌ ${message}
+                </span>`
+            );
         }
     });
-
-    // Cek email saat user mengetik
-    $("#email").on("input", function () {
-        let email = $(this).val().trim();
-        $(this).next(".msg").remove(); // Hapus pesan lama setiap ketikan
-
-        if (email.length > 5) {
-            checkAvailability("email", email, "#email");
-        }
-    });
-
-    // Fungsi untuk cek username/email ke server
-    function checkAvailability(type, value, field) {
-        $.ajax({
-            url: "php/check_user.php",
-            type: "POST",
-            data: { [type]: value },
-            dataType: "json",
-            success: function (response) {
-                $(field).next(".msg").remove(); // Hapus pesan lama
-                
-                if (response.exists) {
-                    // Jika username/email sudah dipakai (tampilkan merah ❌)
-                    $(field).after(
-                        `<span class='msg' style='color:red; font-weight:bold;'>
-                            ❌ ${response.message}
-                        </span>`
-                    );
-                } else {
-                    // Jika username/email bisa digunakan (tampilkan hijau ✅)
-                    $(field).after(
-                        `<span class='msg' style='color:green; font-weight:bold;'>
-                            ✅ Bisa digunakan!
-                        </span>`
-                    );
-                }
-            },
-            error: function () {
-                console.log("Error checking " + type);
-            }
-        });
-    }
 });
