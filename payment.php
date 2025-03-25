@@ -4,6 +4,13 @@ if (!isset($_SESSION['ID_user']) || $_SESSION['role'] != 'user') {
     header('Location: login.html');
     exit();
 }
+
+// Ambil data user dari database berdasarkan session
+include 'php/database.php';
+$user_id = $_SESSION['ID_user'];
+$user_query = "SELECT username, email FROM users WHERE ID_user = '$user_id'";
+$user_result = $koneksi->query($user_query);
+$user_data = $user_result->fetch_assoc();
 ?>
 
 <!DOCTYPE html>
@@ -12,6 +19,8 @@ if (!isset($_SESSION['ID_user']) || $_SESSION['role'] != 'user') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment Page</title>
+    <!-- Tambahkan ini di bagian head -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0R3v6eP_1ps4vHx3qQ5IsxeFHgj0QwJM&libraries=places"></script>
 
     <!-- Fonts -->
     <script src="https://kit.fontawesome.com/c70abe0f51.js" crossorigin="anonymous"></script>
@@ -105,7 +114,13 @@ if (!isset($_SESSION['ID_user']) || $_SESSION['role'] != 'user') {
                 <input type="tel" id="phone" name="phone" placeholder="Phone" required>
 
                 <label for="address">Alamat:</label>
-                <textarea id="address" name="address" placeholder="Address" required></textarea>
+                <div class="location-controls">
+                    <button type="button" onclick="getLocation()" class="btn-location">
+                        <i data-feather="map-pin"></i> Deteksi Lokasi Saya
+                    </button>
+                    <span class="location-status" id="location-status"></span>
+                </div>
+                <textarea id="address" name="address" placeholder="Klik tombol 'Deteksi Lokasi' atau ketik manual" required></textarea>
 
                 <button type="submit" class="btn">Confirm Payment</button>
             </form>
@@ -117,7 +132,11 @@ if (!isset($_SESSION['ID_user']) || $_SESSION['role'] != 'user') {
     <script src="javascript/payment.js"></script>
     <script>
         feather.replace(); // Inisialisasi Feather Icons
+        const userData = {
+        name: "<?php echo htmlspecialchars($user_data['username'] ?? ''); ?>",
+        email: "<?php echo htmlspecialchars($user_data['email'] ?? ''); ?>",
+        phone: "<?php echo htmlspecialchars($user_data['phone'] ?? ''); ?>"
+};
     </script>
-
 </body>
 </html>

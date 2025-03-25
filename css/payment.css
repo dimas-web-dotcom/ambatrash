@@ -288,3 +288,60 @@ footer .credit {
         padding: 0.5rem;
     }
 }
+
+/* Tambahkan di payment.css */
+.btn-location {
+    background-color: #4285F4;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+}
+
+.btn-location:hover {
+    background-color: #3367D6;
+}
+
+.btn-location i {
+    width: 16px;
+    height: 16px;
+}
+
+.location-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.btn-location {
+    background-color: #4285F4;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+}
+
+.btn-location:hover {
+    background-color: #3367D6;
+}
+
+.btn-location i {
+    width: 16px;
+    height: 16px;
+}
+
+.location-status {
+    font-size: 0.9em;
+    color: #666;
+}
