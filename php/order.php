@@ -5,12 +5,12 @@ if (!isset($_SESSION['ID_user']) || $_SESSION['role'] != 'user') {
     exit();
 }
 
-header('Content-Type: application/json'); // Set response sebagai JSON
+header('Content-Type: application/json'); 
 
 require_once dirname(__FILE__) . '/midtrans-php-master/Midtrans.php';
 
 // Set Merchant Server Key
-\Midtrans\Config::$serverKey = 'SB-Mid-server-oTS7zgO5wrXCd-F3cqozNTff'; // Ganti dengan Server Key Anda
+\Midtrans\Config::$serverKey = 'SB-Mid-server-oTS7zgO5wrXCd-F3cqozNTff'; 
 \Midtrans\Config::$isProduction = false; // Ubah ke true jika di production
 \Midtrans\Config::$isSanitized = true;
 \Midtrans\Config::$is3ds = true;
